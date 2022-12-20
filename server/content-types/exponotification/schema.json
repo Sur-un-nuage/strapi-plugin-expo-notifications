@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "exponotifications",
+  "info": {
+    "singularName": "exponotification",
+    "pluralName": "exponotifications",
+    "displayName": "Expo notification"
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": ""
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": true
+    },
+    "content-type-builder": {
+      "visible": "false"
+    }
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 255
+    },
+    "subtitle": {
+      "type": "string",
+      "required": false
+    },
+    "data": {
+      "type": "json"
+    },
+    "receivers": {
+      "type": "json"
+    }
+  }
+}

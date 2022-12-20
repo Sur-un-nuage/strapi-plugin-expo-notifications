@@ -1,0 +1,31 @@
+{
+  "name": "@surunnuage/expo-notifications",
+  "version": "1.0.0",
+  "description": "Send expo notifications directly from Strapi",
+  "strapi": {
+    "name": "expo-notifications",
+    "description": "Send expo notifications directly from Strapi",
+    "kind": "plugin",
+    "displayName": "My Notifications"
+  },
+  "dependencies": {
+    "expo-server-sdk": "^3.6.0"
+  },
+  "author": {
+    "name": "Thomas Poirier",
+    "email": "opendev@surunnuage.dev",
+    "url": "https://www.surunnuage.dev"
+  },
+  "maintainers": [
+    {
+      "name": "Sur un nuage .dev",
+      "email": "opendev@surunnuage.dev",
+      "url": "https://www.surunnuage.dev"
+    }
+  ],
+  "engines": {
+    "node": ">=14.19.1 <=18.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}
