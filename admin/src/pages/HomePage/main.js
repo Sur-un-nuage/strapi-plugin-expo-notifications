@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import { NotFound } from "@strapi/helper-plugin";
 
-import notificationsRequests from "../../api/exponotification";
+import myRequests from "../../api/exponotification";
 
 import { Icon } from "@strapi/design-system/Icon";
 import { useFormik } from "formik";
@@ -38,6 +38,7 @@ export default function Main({
   receiversCount,
   refreshNotificationsState,
   isLoading,
+  testToken,
 }) {
   const [tokens, setTokens] = useState([]);
   const [testMode, setTestMode] = useState(false);
@@ -64,14 +65,22 @@ export default function Main({
     }),
     onSubmit: async (values) => {
       // console.log("values", values, "testMode", testMode, "tokens", tokens);
-      if (!testMode && tokens.length !== 0) {
-        await notificationsRequests
-          .createNotification(values, tokens)
-          .then((res) => {
-            // console.log(res);
-            refreshNotificationsState();
-            resetForm();
-          });
+      if (testMode) {
+        const testTokens = [testToken];
+        values.title = `[Test] ${values.title}`;
+        await myRequests.createNotification(values, testTokens).then((res) => {
+          // console.log(res);
+          refreshNotificationsState();
+          resetForm();
+        });
+        return;
+      }
+      if (tokens.length !== 0) {
+        await myRequests.createNotification(values, tokens).then((res) => {
+          // console.log(res);
+          refreshNotificationsState();
+          resetForm();
+        });
       } else {
         console.log("no receivers");
       }
@@ -106,6 +115,7 @@ export default function Main({
               formik={formik}
               sendTest={sendTest}
               sendForReal={sendForReal}
+              testToken={testToken}
             />
           }
           endCol={

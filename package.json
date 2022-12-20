@@ -1,15 +1,22 @@
 {
-  "name": "@surunnuage/expo-notifications",
+  "name": "@surunnuage/strapi-plugin-expo-notifications",
   "version": "1.0.0",
-  "description": "Send expo notifications directly from Strapi",
+  "description": "Send expo notifications from Strapi",
   "strapi": {
     "name": "expo-notifications",
-    "description": "Send expo notifications directly from Strapi",
+    "description": "Send expo notifications from Strapi",
     "kind": "plugin",
     "displayName": "My Notifications"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sur-un-nuage/strapi-plugin-expo-notifications"
+  },
   "dependencies": {
     "expo-server-sdk": "^3.6.0"
+  },
+  "peerDependencies": {
+    "@strapi/strapi": "^4.5.1"
   },
   "author": {
     "name": "Thomas Poirier",

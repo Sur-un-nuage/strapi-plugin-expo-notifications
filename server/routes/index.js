@@ -1,6 +1,15 @@
 module.exports = [
   {
     method: "GET",
+    path: "/get-plugin-config",
+    handler: "exponotification.getPluginConfig",
+    config: {
+      auth: false,
+      policies: [],
+    },
+  },
+  {
+    method: "GET",
     path: "/find",
     handler: "exponotification.find",
     config: {

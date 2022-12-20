@@ -1,6 +1,20 @@
 "use strict";
 
 module.exports = {
+  async getPluginConfig(ctx) {
+    try {
+      const testToken = await strapi
+        .plugin("expo-notifications")
+        .config("testToken");
+      console.log("testToken", testToken);
+      const response = {
+        testToken: testToken,
+      };
+      return response;
+    } catch (err) {
+      ctx.throw(500, err);
+    }
+  },
   async find(ctx) {
     try {
       return await strapi

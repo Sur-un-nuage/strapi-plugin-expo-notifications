@@ -6,13 +6,13 @@ import { Box, Typography, Button, Stack } from "@strapi/design-system";
 import {
   Field,
   FieldLabel,
-  FieldHint,
-  FieldError,
   FieldInput,
-  FieldAction,
+  // FieldHint,
+  // FieldError,
+  // FieldAction,
 } from "@strapi/design-system/Field";
 
-export default function Sender({ formik, sendTest, sendForReal }) {
+export default function Sender({ formik, sendTest, sendForReal, testToken }) {
   return (
     <div style={{ height: 280 }}>
       <Box padding={4}>
@@ -50,9 +50,11 @@ export default function Sender({ formik, sendTest, sendForReal }) {
               marginBottom: 14,
             }}
           >
-            <Button variant="secondary" type="submit" onClick={sendTest}>
-              Envoyer un test
-            </Button>
+            {testToken && (
+              <Button variant="secondary" type="submit" onClick={sendTest}>
+                Envoyer un test
+              </Button>
+            )}
             <div style={{ marginLeft: 8 }}>
               <Button type="submit" onClick={sendForReal}>
                 Envoyer
