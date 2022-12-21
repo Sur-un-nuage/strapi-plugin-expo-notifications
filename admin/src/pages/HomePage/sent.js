@@ -13,20 +13,28 @@ import { Illo } from "../../components/Illo";
 import NotificationItem from "./notification_item";
 import PaginationURLQuery from "../../components/paginationURLQuery";
 
+import { useIntl } from "react-intl";
+import getTrad from "../../utils/getTrad";
+
 function getCurrentPageFromCount(count, pageSize) {
   const rawCount = count - 1;
   const currentPage = parseInt(rawCount / pageSize) + 1;
   return currentPage;
 }
 
-function SentList({ notifications, isLoading }) {
+function SentList({ notifications, isLoading, formatMessage }) {
   const sortedNotifs = _.orderBy(notifications, ["createdAt"], ["desc"]);
   if (isLoading)
     return (
       <div
         style={{ display: "flex", justifyContent: "center", marginTop: 100 }}
       >
-        <Loader>Loading content...</Loader>
+        <Loader>
+          {formatMessage({
+            id: getTrad("loading"),
+            defaultMessage: "Loading content...",
+          })}
+        </Loader>
       </div>
     );
   if (!notifications.length || notifications.length === 0) {
@@ -34,7 +42,10 @@ function SentList({ notifications, isLoading }) {
       <EmptyStateLayout
         shadow={null}
         icon={<Illo />}
-        content="Vous n'avez pas encore envoyé de notification..."
+        content={formatMessage({
+          id: getTrad("empty.state"),
+          defaultMessage: "You haven't sent any notification yet",
+        })}
       />
     );
   }
@@ -53,17 +64,26 @@ function SentList({ notifications, isLoading }) {
 }
 
 export default function Sent({ notifications, count, isLoading }) {
+  const { formatMessage } = useIntl();
   const currentPage = getCurrentPageFromCount(count, 10);
-  // console.log("currentPage", currentPage);
   return (
     <div style={{ backgroundColor: "white" }}>
       <Box paddingTop={6} paddingBottom={6} paddingLeft={4} paddingRight={4}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography variant="beta">Notifications envoyées</Typography>
+          <Typography variant="beta">
+            {formatMessage({
+              id: getTrad("title.sent"),
+              defaultMessage: "Sent notifications",
+            })}
+          </Typography>
           <PaginationURLQuery pagination={{ pageCount: currentPage }} />
         </div>
         <Divider unsetMargin={false} />
-        <SentList notifications={notifications} isLoading={isLoading} />
+        <SentList
+          notifications={notifications}
+          isLoading={isLoading}
+          formatMessage={formatMessage}
+        />
       </Box>
     </div>
   );

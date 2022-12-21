@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import _ from "lodash";
-// import { useLocation } from "react-router-dom";
-// import pluginId from "../../pluginId";
 
 import myRequests from "../../api/exponotification";
 import useQueryParams from "../../utils/useQueryParams";
@@ -17,9 +14,7 @@ export default function HomePageWithData() {
   const [notifications, setNotifications] = useState([]);
   const [receivers, setReceivers] = useState([]);
   const [receiversCount, setReceiversCount] = useState(0);
-  // const location = useLocation();
   const [{ query }] = useQueryParams();
-
   const fetchConfig = async () => {
     const config = await myRequests.getPluginConfig();
     if (config && config.testToken) {

@@ -1,1 +1,18 @@
-{}
+{
+  "plugin.name": "My notifications",
+  "header.subtitle": "sent notifications",
+  "title.new": "Create a notification",
+  "title.sent": "Sent notifications",
+  "title.receivers": "Receivers",
+  "title": "Title",
+  "title.placeholder": "Chose a title for your notification",
+  "subtitle": "Subtitle",
+  "subtitle.placeholder": "Chose a subtitle",
+  "select.all": "Select all",
+  "unselect.all": "Unselect all",
+  "send.test": "Send a test",
+  "send.real": "Send",
+  "form.required": "Required field",
+  "empty.state": "You haven't sent any notification yet",
+  "loading": "Loading content..."
+}

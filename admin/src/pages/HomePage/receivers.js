@@ -1,9 +1,11 @@
 import React from "react";
-import { Box } from "@strapi/design-system/Box";
-import { Typography } from "@strapi/design-system/Typography";
+import { Box, Typography } from "@strapi/design-system";
 
 import ReceiverItem from "./receiver_item";
 // import SelectReceivers from "./select_receivers";
+
+import { useIntl } from "react-intl";
+import getTrad from "../../utils/getTrad";
 
 export default function Receivers({
   receivers,
@@ -15,11 +17,17 @@ export default function Receivers({
   // receiversCount,
   // setTokens,
 }) {
+  const { formatMessage } = useIntl();
   return (
     <div style={{ height: 280 }}>
       <Box padding={6}>
         <Box paddingBottom={2}>
-          <Typography variant="beta">Destinataires</Typography>
+          <Typography variant="beta">
+            {formatMessage({
+              id: getTrad("title.receivers"),
+              defaultMessage: "Receivers",
+            })}
+          </Typography>
         </Box>
         <div
           style={{
@@ -31,12 +39,18 @@ export default function Receivers({
         >
           <div style={{ cursor: "pointer" }} onClick={() => addAll()}>
             <Typography variant="pi" textColor="#4A45FF">
-              Sélectionner tout
+              {formatMessage({
+                id: getTrad("select.all"),
+                defaultMessage: "Select all",
+              })}
             </Typography>
           </div>
           <div style={{ cursor: "pointer" }} onClick={() => removeAll()}>
             <Typography variant="pi" textColor="#4A45FF">
-              Déselectionner tout
+              {formatMessage({
+                id: getTrad("unselect.all"),
+                defaultMessage: "Unselect all",
+              })}
             </Typography>
           </div>
         </div>
@@ -58,12 +72,15 @@ export default function Receivers({
             </div>
           ))}
         </div>
-        {/* <SelectReceivers
-          receivers={receivers}
-          tokens={tokens}
-          setTokens={setTokens}
-        /> */}
       </Box>
     </div>
   );
+}
+
+{
+  /* <SelectReceivers
+  receivers={receivers}
+  tokens={tokens}
+  setTokens={setTokens}
+/> */
 }

@@ -1,41 +1,64 @@
 import React from "react";
-import _ from "lodash";
-
-import { Box, Typography, Button, Stack } from "@strapi/design-system";
 
 import {
+  Box,
+  Typography,
+  Button,
+  Stack,
   Field,
   FieldLabel,
   FieldInput,
-  // FieldHint,
-  // FieldError,
-  // FieldAction,
-} from "@strapi/design-system/Field";
+} from "@strapi/design-system";
+
+import { useIntl } from "react-intl";
+import getTrad from "../../utils/getTrad";
 
 export default function Sender({ formik, sendTest, sendForReal, testToken }) {
+  const { formatMessage } = useIntl();
   return (
     <div style={{ height: 280 }}>
       <Box padding={4}>
         <Box paddingTop={2} paddingBottom={4}>
-          <Typography variant="beta">Nouvelle notification</Typography>
+          <Typography variant="beta">
+            {formatMessage({
+              id: getTrad("title.new"),
+              defaultMessage: "New notification",
+            })}
+          </Typography>
         </Box>
         <form>
           <Stack spacing={4}>
             <Field name="title">
-              <FieldLabel>Titre</FieldLabel>
+              <FieldLabel>
+                {formatMessage({
+                  id: getTrad("title"),
+                  defaultMessage: "Title",
+                })}
+              </FieldLabel>
               <FieldInput
                 type="text"
-                placeholder="Choisissez un titre pour votre notification"
+                placeholder={formatMessage({
+                  id: getTrad("title.placeholder"),
+                  defaultMessage: "Chose a title",
+                })}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.title}
               />
             </Field>
             <Field name="subtitle">
-              <FieldLabel>Sous-titre</FieldLabel>
+              <FieldLabel>
+                {formatMessage({
+                  id: getTrad("subtitle"),
+                  defaultMessage: "Subtitle",
+                })}
+              </FieldLabel>
               <FieldInput
                 type="text"
-                placeholder="Choisissez un sous-titre"
+                placeholder={formatMessage({
+                  id: getTrad("subtitle.placeholder"),
+                  defaultMessage: "Chose a subtitle",
+                })}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.subtitle}
@@ -52,12 +75,18 @@ export default function Sender({ formik, sendTest, sendForReal, testToken }) {
           >
             {testToken && (
               <Button variant="secondary" type="submit" onClick={sendTest}>
-                Envoyer un test
+                {formatMessage({
+                  id: getTrad("send.test"),
+                  defaultMessage: "Send a test",
+                })}
               </Button>
             )}
             <div style={{ marginLeft: 8 }}>
               <Button type="submit" onClick={sendForReal}>
-                Envoyer
+                {formatMessage({
+                  id: getTrad("send.real"),
+                  defaultMessage: "Send",
+                })}
               </Button>
             </div>
           </div>

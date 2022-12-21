@@ -6,7 +6,6 @@ module.exports = {
       const testToken = await strapi
         .plugin("expo-notifications")
         .config("testToken");
-      console.log("testToken", testToken);
       const response = {
         testToken: testToken,
       };

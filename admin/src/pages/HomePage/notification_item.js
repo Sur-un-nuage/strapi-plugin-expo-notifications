@@ -1,7 +1,8 @@
 import React from "react";
 
-import { Typography } from "@strapi/design-system/Typography";
-import { Box } from "@strapi/design-system/Box";
+import { Typography, Box } from "@strapi/design-system";
+
+import { auth } from "@strapi/helper-plugin";
 
 const options = {
   weekday: "short",
@@ -10,13 +11,15 @@ const options = {
   day: "numeric",
 };
 
-function formatMyDate(value, locale = "fr-FR") {
+function formatMyDate(value, locale = "en") {
   return new Date(value).toLocaleDateString(locale, options);
 }
 
 export default function NotificationItem({ item }) {
+  const user = auth.get("userInfo");
+  const { preferedLanguage } = user;
   const { title, subtitle, createdAt } = item;
-  const legibleCreatedAt = formatMyDate(createdAt);
+  const legibleCreatedAt = formatMyDate(createdAt, preferedLanguage);
   return (
     <Box paddingBottom={4}>
       <Typography variant="pi">{legibleCreatedAt}</Typography>

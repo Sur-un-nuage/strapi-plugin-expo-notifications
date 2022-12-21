@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-// import pluginId from "../../pluginId";
 import { Switch, Route } from "react-router-dom";
 import { NotFound } from "@strapi/helper-plugin";
 
@@ -16,11 +15,14 @@ import {
   ContentLayout,
 } from "@strapi/design-system/Layout";
 
+import { useIntl } from "react-intl";
+
 import Sender from "./sender";
 import Sent from "./sent";
 import Receivers from "./receivers";
 
 import pluginId from "../../pluginId";
+import getTrad from "../../utils/getTrad";
 
 const Pencil = () => (
   <Icon
@@ -42,7 +44,7 @@ export default function Main({
 }) {
   const [tokens, setTokens] = useState([]);
   const [testMode, setTestMode] = useState(false);
-
+  const { formatMessage } = useIntl();
   const addToken = (token) => {
     setTokens([...tokens, token]);
   };
@@ -50,7 +52,8 @@ export default function Main({
     setTokens(tokens.filter((item) => item !== token));
   };
   const addAll = () => {
-    setTokens(receivers.map((item) => item.expoPushToken));
+    const allTokens = receivers.map((item) => item.value);
+    setTokens(allTokens);
   };
   const removeAll = () => {
     setTokens([]);
@@ -61,15 +64,18 @@ export default function Main({
       subtitle: "",
     },
     validationSchema: Yup.object({
-      title: Yup.string().required("Ce champ est requis"),
+      title: Yup.string().required(
+        formatMessage({
+          id: getTrad("form.required"),
+          defaultMessage: "Required field",
+        })
+      ),
     }),
     onSubmit: async (values) => {
-      // console.log("values", values, "testMode", testMode, "tokens", tokens);
       if (testMode) {
         const testTokens = [testToken];
         values.title = `[Test] ${values.title}`;
         await myRequests.createNotification(values, testTokens).then((res) => {
-          // console.log(res);
           refreshNotificationsState();
           resetForm();
         });
@@ -77,7 +83,6 @@ export default function Main({
       }
       if (tokens.length !== 0) {
         await myRequests.createNotification(values, tokens).then((res) => {
-          // console.log(res);
           refreshNotificationsState();
           resetForm();
         });
@@ -104,8 +109,14 @@ export default function Main({
   return (
     <div>
       <BaseHeaderLayout
-        title="Mes notifications"
-        subtitle={`${count} notifications envoyées`}
+        title={formatMessage({
+          id: getTrad("plugin.name"),
+          defaultMessage: "My notifications",
+        })}
+        subtitle={`${count} ${formatMessage({
+          id: getTrad("header.subtitle"),
+          defaultMessage: "sent notifications",
+        })}`}
         as="h2"
       />
       <ContentLayout>
