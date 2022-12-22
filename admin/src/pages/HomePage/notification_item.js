@@ -11,13 +11,13 @@ const options = {
   day: "numeric",
 };
 
-function formatMyDate(value, locale) {
+function formatMyDate(value) {
   if (!value) return null;
-  const myLocale = locale ?? "en-US";
-  console.log("myLocale", myLocale);
+  const currentLocale =
+    localStorage.getItem("strapi-admin-language") ?? "en-US";
   try {
     const date = new Date(value);
-    const localizedDate = date.toLocaleDateString(myLocale, options);
+    const localizedDate = date.toLocaleDateString(currentLocale, options);
     return localizedDate;
   } catch (e) {
     console.log(e);
@@ -26,11 +26,8 @@ function formatMyDate(value, locale) {
 }
 
 export default function NotificationItem({ item }) {
-  const user = auth.get("userInfo");
-  console.log("user", user);
-  const { preferedLanguage } = user;
   const { title, subtitle, createdAt } = item;
-  const legibleCreatedAt = formatMyDate(createdAt, preferedLanguage);
+  const legibleCreatedAt = formatMyDate(createdAt);
   return (
     <Box paddingBottom={4}>
       <Typography variant="pi">{legibleCreatedAt}</Typography>
