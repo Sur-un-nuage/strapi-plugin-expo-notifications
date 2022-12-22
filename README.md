@@ -50,14 +50,6 @@ yarn build
 
 ## Usage
 
-### Add your expo key
-
-In order to securely use the Expo push notifications API, an Expo Access Token can be added to an `.env` file (so it won't be commited to Github or another version control system). The token must be called EXPO_ACCESS_TOKEN. You can find yours here: https://expo.dev/accounts/YOUR_EXPO_USERNAME/settings/access-tokens
-
-```
-EXPO_ACCESS_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-```
-
 ### Enable the plugin
 
 Open the `config/plugins.js` file (or create it if it's not there) and enable the plugin. It will look as follow:
@@ -72,7 +64,15 @@ module.exports = ({ env }) => ({
 });
 ```
 
-### Add a test token
+### [Optional but recommended] Add your expo key
+
+In order to securely use the Expo push notifications API, an Expo Access Token can be added to an `.env` file (so it won't be commited to Github or another version control system). The token must be called EXPO_ACCESS_TOKEN. You can find yours here: https://expo.dev/accounts/YOUR_EXPO_USERNAME/settings/access-tokens
+
+```
+EXPO_ACCESS_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+```
+
+### [Optional] Add a test token
 
 Expo-notifications allows you to add a test token in order to test your submission before the real sending (a test button will appear if the plugin finds a test token):
 
@@ -91,7 +91,7 @@ module.exports = ({ env }) => ({
 
 And that's it, now you can send notifications to your mobile app directly from Strapi.
 
-### Further developments:
+## Further developments:
 
 Must have:
 
