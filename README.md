@@ -1,5 +1,7 @@
 # Strapi plugin expo-notifications
 
+<img width="1322" alt="screen_notofications" src="https://user-images.githubusercontent.com/12623963/209171709-1121a482-f61e-475a-a291-3d96c15b1e7a.png">
+
 ## Introduction
 
 Expo-notifications is a Strapi plugin that allows a Strapi user to send notifications via the Expo API directly from the Strapi admin panel. Typical use case: you have a react-native app connected to Strapi and you wish to notify your users about some newly published content without leaving the CMS.
@@ -24,7 +26,9 @@ The Expo docs will guide you through this step: https://docs.expo.dev/push-notif
 
 Now that you have the mobile app's expoPushToken, you can store it in Strapi. This will be done by adding a dedicated field to your existing users content-type. The field has to be called expoPushToken and expect a string.
 
-The plugin will scan your users list in search for their expoPushToken: each time a token is found, the user is added to a list of potential receivers.
+![screen_add_field](https://user-images.githubusercontent.com/12623963/209175619-7fd1eda7-a89b-491a-a39c-f5f02836f625.png)
+
+Update your user with his/her expoPushToken. The plugin will scan your users list in search for their expoPushToken: each time a token is found, the user is added to a list of potential receivers.
 
 ### Step 3: Configure the credentials
 
@@ -102,3 +106,5 @@ Nice to have:
 
 - Customization options
 - Scheduler
+
+License: MIT - https://opensource.org/licenses/MIT
