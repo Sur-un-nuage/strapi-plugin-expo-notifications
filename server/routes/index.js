@@ -4,8 +4,8 @@ module.exports = [
     path: "/get-plugin-config",
     handler: "exponotification.getPluginConfig",
     config: {
-      auth: false,
-      policies: [],
+      policies: ["admin::isAuthenticatedAdmin"],
+      // auth: false,
     },
   },
   {
@@ -13,8 +13,8 @@ module.exports = [
     path: "/find",
     handler: "exponotification.find",
     config: {
-      policies: [],
-      auth: false,
+      policies: ["admin::isAuthenticatedAdmin"],
+      // auth: false,
     },
   },
   {
@@ -22,8 +22,8 @@ module.exports = [
     path: "/findFrom",
     handler: "exponotification.findFrom",
     config: {
-      policies: [],
-      auth: false,
+      policies: ["admin::isAuthenticatedAdmin"],
+      // auth: false,
     },
   },
   {
@@ -31,8 +31,8 @@ module.exports = [
     path: "/recipientsFrom/:start",
     handler: "exponotification.recipientsFrom",
     config: {
-      policies: [],
-      auth: false,
+      policies: ["admin::isAuthenticatedAdmin"],
+      // auth: false,
     },
   },
   {
@@ -40,8 +40,8 @@ module.exports = [
     path: "/create",
     handler: "exponotification.create",
     config: {
-      policies: [],
-      auth: false,
+      policies: ["admin::isAuthenticatedAdmin"],
+      // auth: false,
     },
   },
   {
@@ -49,8 +49,8 @@ module.exports = [
     path: "/delete/:id",
     handler: "exponotification.delete",
     config: {
-      policies: [],
-      auth: false,
+      policies: ["admin::isAuthenticatedAdmin"],
+      // auth: false,
     },
   },
   {
@@ -58,8 +58,8 @@ module.exports = [
     path: "/update/:id",
     handler: "exponotification.update",
     config: {
-      policies: [],
-      auth: false,
+      policies: ["admin::isAuthenticatedAdmin"],
+      // auth: false,
     },
   },
 ];
