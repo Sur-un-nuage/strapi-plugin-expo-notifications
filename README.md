@@ -10,7 +10,7 @@ For the moment, the notification object is dead simple - a title and a subtitle.
 
 The plugin expects a list of expoPushTokens in order to know where to send the notifications. So the set-up will consist in getting those tokens from the mobile app, storing them into Strapi and then gather the correct credentials.
 
-### Step 1: Get the expoPushToken of your mobile users
+### Step 1: Get the expoPushToken of your mobile user
 
 In order to send a notification to the users of your react-native app, you first have to get their own unique expoPushToken. This can be achieved via the Notifications.getExpoPushTokenAsync() function at the root of your mobile app.
 
@@ -22,7 +22,9 @@ The Expo docs will guide you through this step: https://docs.expo.dev/push-notif
 
 ### Step 2: Save the expoPushToken in Strapi
 
-Now that you have the mobile app's expoPushToken, you can store it in Strapi. This will be done by adding a dedicated field to your existing users content-type. The field has to be called expoPushToken and expect a string. The plugin will scan your users list in search for their expoPushToken: each time a token is found, the user is added to a list of potential receivers.
+Now that you have the mobile app's expoPushToken, you can store it in Strapi. This will be done by adding a dedicated field to your existing users content-type. The field has to be called expoPushToken and expect a string.
+
+The plugin will scan your users list in search for their expoPushToken: each time a token is found, the user is added to a list of potential receivers.
 
 ### Step 3: Configure the credentials
 
@@ -48,7 +50,9 @@ yarn build
 
 ## Usage
 
-In order to securely use the Expo push notifications API, an Expo Access Token should be added to an `.env` file (so it won't be commited to Github or another version control system). The token must be called EXPO_ACCESS_TOKEN. You can find yours here: https://expo.dev/accounts/YOUR_EXPO_USERNAME/settings/access-tokens
+### Add your expo key
+
+In order to securely use the Expo push notifications API, an Expo Access Token can be added to an `.env` file (so it won't be commited to Github or another version control system). The token must be called EXPO_ACCESS_TOKEN. You can find yours here: https://expo.dev/accounts/YOUR_EXPO_USERNAME/settings/access-tokens
 
 ```
 EXPO_ACCESS_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -68,7 +72,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-### Additional configuration
+### Add a test token
 
 Expo-notifications allows you to add a test token in order to test your submission before the real sending (a test button will appear if the plugin finds a test token):
 
@@ -87,7 +91,7 @@ module.exports = ({ env }) => ({
 
 And that's it, now you can send notifications to your mobile app directly from Strapi.
 
-### Next development steps:
+### Further developments:
 
 Must have:
 
