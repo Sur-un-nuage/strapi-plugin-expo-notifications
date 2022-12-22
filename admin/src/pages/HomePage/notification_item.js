@@ -2,8 +2,6 @@ import React from "react";
 
 import { Typography, Box } from "@strapi/design-system";
 
-import { auth } from "@strapi/helper-plugin";
-
 const options = {
   weekday: "short",
   year: "numeric",
