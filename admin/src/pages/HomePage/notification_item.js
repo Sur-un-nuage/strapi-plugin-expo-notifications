@@ -12,6 +12,7 @@ const options = {
 };
 
 function formatMyDate(value, locale = "en") {
+  if (!value) return null;
   return new Date(value).toLocaleDateString(locale, options);
 }
 
