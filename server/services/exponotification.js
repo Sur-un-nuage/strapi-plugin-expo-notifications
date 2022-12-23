@@ -46,6 +46,10 @@ module.exports = ({ strapi }) => ({
     return { notifications, count };
   },
   async recipientsFrom(start) {
+    const customFieldName = process.env.STRAPI_ADMIN_CUSTOM_FIELD_NAME
+      ? process.env.STRAPI_ADMIN_CUSTOM_FIELD_NAME
+      : "expoPushToken";
+    console.log("Custom field name in services", customFieldName);
     const count = await strapi.entityService.count(
       "plugin::users-permissions.user"
     );
@@ -53,7 +57,12 @@ module.exports = ({ strapi }) => ({
       "plugin::users-permissions.user",
       {
         start: start,
-        limit: 10,
+        limit: 200,
+        filters: {
+          [customFieldName]: {
+            $notNull: true,
+          },
+        },
       }
     );
     return { recipients, count };
