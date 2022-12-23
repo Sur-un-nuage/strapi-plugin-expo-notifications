@@ -46,25 +46,44 @@ module.exports = ({ strapi }) => ({
     return { notifications, count };
   },
   async recipientsFrom(start) {
-    const customFieldName = process.env.STRAPI_ADMIN_CUSTOM_FIELD_NAME
-      ? process.env.STRAPI_ADMIN_CUSTOM_FIELD_NAME
-      : "expoPushToken";
-    console.log("Custom field name in services", customFieldName);
     const count = await strapi.entityService.count(
       "plugin::users-permissions.user"
     );
-    const recipients = await strapi.entityService.findMany(
-      "plugin::users-permissions.user",
-      {
-        start: start,
-        limit: 200,
-        filters: {
-          [customFieldName]: {
-            $notNull: true,
+    const customFieldName = await strapi
+      .plugin("expo-notifications")
+      .config("customFieldName");
+    let recipients = [];
+    if (customFieldName) {
+      const rawRecipients = await strapi.entityService.findMany(
+        "plugin::users-permissions.user",
+        {
+          start: start,
+          // limit: 200,
+          filters: {
+            [customFieldName]: {
+              $notNull: true,
+            },
           },
-        },
-      }
-    );
+        }
+      );
+      rawRecipients.forEach((item) => {
+        item.expoPushToken = item[customFieldName];
+        recipients.push(item);
+      });
+    } else {
+      recipients = await strapi.entityService.findMany(
+        "plugin::users-permissions.user",
+        {
+          start: start,
+          // limit: 200,
+          filters: {
+            expoPushToken: {
+              $notNull: true,
+            },
+          },
+        }
+      );
+    }
     return { recipients, count };
   },
   async create(body) {
