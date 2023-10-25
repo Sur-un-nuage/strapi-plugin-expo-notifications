@@ -67,7 +67,7 @@ export default function Sent({ notifications, count, isLoading }) {
   const { formatMessage } = useIntl();
   const currentPage = getCurrentPageFromCount(count, 10);
   return (
-    <div style={{ backgroundColor: "white" }}>
+    <Box>
       <Box paddingTop={6} paddingBottom={6} paddingLeft={4} paddingRight={4}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="beta">
@@ -85,6 +85,6 @@ export default function Sent({ notifications, count, isLoading }) {
           formatMessage={formatMessage}
         />
       </Box>
-    </div>
+    </Box>
   );
 }
