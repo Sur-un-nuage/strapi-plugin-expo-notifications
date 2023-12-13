@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 
-import myRequests from "../../api/exponotification";
 import useQueryParams from "../../utils/useQueryParams";
+import { useFetchClient } from "@strapi/helper-plugin";
 
 import Main from "./main";
 
 import { buildReceiversOptions } from "./functions";
 
 export default function HomePageWithData() {
+  const { get } = useFetchClient();
   const [isLoading, setIsLoading] = useState(true);
   const [count, setCount] = useState(0);
   const [testToken, setTestToken] = useState(null);
@@ -16,16 +17,17 @@ export default function HomePageWithData() {
   const [receiversCount, setReceiversCount] = useState(0);
   const [{ query }] = useQueryParams();
   const fetchConfig = async () => {
-    const config = await myRequests.getPluginConfig();
-    if (config && config.testToken) {
-      setTestToken(config.testToken);
+    const config = await get(`/expo-notifications/get-plugin-config`);
+    if (config.data && config.data.testToken) {
+      setTestToken(config.data.testToken);
     }
   };
-
   const fetchRecipients = async () => {
-    const data = await myRequests.getPagedRecipients(0);
-    console.log("fetched receivers", data);
-    const options = buildReceiversOptions(data.recipients);
+    const res = await get(`/expo-notifications/recipientsFrom/0`);
+    const { data } = res;
+    const options = buildReceiversOptions(
+      data.recipients ? data.recipients : []
+    );
     setReceivers(options);
     setReceiversCount(data.count);
   };
@@ -38,22 +40,26 @@ export default function HomePageWithData() {
       if (query.pageSize) {
         pageSize = Number(query.pageSize);
       }
-      const data = await myRequests.getPagedNotifications(query.page, pageSize);
-      setNotifications(data.notifications);
-      setCount(data.count);
+      const res = await get(
+        `/expo-notifications/findFrom/?page=${query.page}&pageSize=${pageSize}`
+      );
+      setNotifications(res.data?.notifications);
+      setCount(res.data?.count);
       setIsLoading(false);
     } else {
-      const data = await myRequests.getPagedNotifications(page, pageSize);
-      setNotifications(data.notifications);
-      setCount(data.count);
+      const res = await get(
+        `/expo-notifications/findFrom/?page=${page}&pageSize=${pageSize}`
+      );
+      setNotifications(res.data?.notifications);
+      setCount(res.data?.count);
       setIsLoading(false);
     }
   };
 
-  useEffect(async () => {
-    await fetchData();
-    await fetchRecipients();
-    await fetchConfig();
+  useEffect(() => {
+    fetchData();
+    fetchRecipients();
+    fetchConfig();
   }, [query]);
 
   const refreshNotificationsState = () => {

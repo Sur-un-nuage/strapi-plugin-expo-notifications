@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 
 import { Switch, Route } from "react-router-dom";
-import { NotFound } from "@strapi/helper-plugin";
-
-import myRequests from "../../api/exponotification";
+import Empty from "./empty";
+import { useFetchClient } from "@strapi/helper-plugin";
 
 import { Icon } from "@strapi/design-system/Icon";
 import { useFormik } from "formik";
@@ -44,6 +43,7 @@ export default function Main({
 }) {
   const [tokens, setTokens] = useState([]);
   const [testMode, setTestMode] = useState(false);
+  const { post } = useFetchClient();
   const { formatMessage } = useIntl();
   const addToken = (token) => {
     setTokens([...tokens, token]);
@@ -75,14 +75,20 @@ export default function Main({
       if (testMode) {
         const testTokens = [testToken];
         values.title = `[Test] ${values.title}`;
-        await myRequests.createNotification(values, testTokens).then((res) => {
+        await post(`/expo-notifications/create`, {
+          data: values,
+          tokens: testTokens,
+        }).then((res) => {
           refreshNotificationsState();
           resetForm();
         });
         return;
       }
       if (tokens.length !== 0) {
-        await myRequests.createNotification(values, tokens).then((res) => {
+        await post(`/expo-notifications/create`, {
+          data: values,
+          tokens: tokens,
+        }).then((res) => {
           refreshNotificationsState();
           resetForm();
         });
@@ -151,7 +157,7 @@ export default function Main({
                 isLoading={isLoading}
               />
             </Route>
-            <Route component={NotFound} />
+            <Route component={Empty} />
           </Switch>
         </div>
       </ContentLayout>
