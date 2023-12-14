@@ -1,10 +1,10 @@
 {
   "name": "@surunnuage/strapi-plugin-expo-notifications",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Send expo notifications from Strapi",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Sur-un-nuage/strapi-plugin-expo-notifications"
+    "url": "git+https://github.com/Sur-un-nuage/strapi-plugin-expo-notifications.git"
   },
   "license": "MIT",
   "author": {
@@ -26,7 +26,7 @@
     "@strapi/strapi": "^4.6.0"
   },
   "engines": {
-    "node": "20"
+    "node": ">=16.x.x <=21.x.x"
   },
   "strapi": {
     "name": "expo-notifications",
