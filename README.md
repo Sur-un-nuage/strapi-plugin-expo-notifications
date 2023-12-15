@@ -4,7 +4,7 @@
 
 ## Latest addition
 
-As of v1.10.0, you can now attach a Strapi entry as JSON data.
+As of v1.10.0, you now have the option to attach a Strapi entry as JSON data.
 The messages sent by the plugin will have the following structure:
 
 ```
@@ -14,7 +14,7 @@ to: 'ExponentPushToken[XXX]',
 sound: 'default',
 title: 'Your title',
 body: 'Your subtitle',
-data: { contentType: 'api::modelName.modelName', entryId: 'the id of the entry' }
+data: { contentType: 'api::modelName.modelName', entryId: 'the id of the entry' } // Optional
 }
 
 ```
