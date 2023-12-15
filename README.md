@@ -33,7 +33,7 @@ The plugin expects a list of expoPushTokens in order to know where to send the n
 
 In order to send a notification to the users of your react-native app, you first have to get their own unique expoPushToken. This can be achieved via the Notifications.getExpoPushTokenAsync() function at the root of your mobile app.
 
-````
+```
 
 const token = await Notifications.getExpoPushTokenAsync().data;
 
@@ -73,7 +73,7 @@ npm run build
 
 yarn build
 
-````
+```
 
 ## Usage
 
@@ -81,7 +81,9 @@ yarn build
 
 Open the `config/plugins.js` file (or create it if it's not there) and enable the plugin. It will look as follow:
 
-```js
+```
+
+js
 module.exports = ({ env }) => ({
   ...
   "expo-notifications": {
@@ -89,6 +91,7 @@ module.exports = ({ env }) => ({
   },
   ...
 });
+
 ```
 
 ### [Optional but recommended] Add your expo key
@@ -103,7 +106,9 @@ EXPO_ACCESS_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 Expo-notifications allows you to add a test token in order to test your submission before the real sending (a test button will appear if the plugin finds a test token):
 
-```js
+```
+
+js
 module.exports = ({ env }) => ({
   ...
   "expo-notifications": {
@@ -114,6 +119,7 @@ module.exports = ({ env }) => ({
   },
   ...
 });
+
 ```
 
 And that's it, now you can send notifications to your mobile app directly from Strapi.
