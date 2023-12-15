@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Typography } from "@strapi/design-system";
 
 import { useIntl } from "react-intl";

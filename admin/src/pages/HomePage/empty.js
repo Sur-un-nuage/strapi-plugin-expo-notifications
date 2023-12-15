@@ -1,3 +1,5 @@
+import React from "react";
+
 import { EmptyStateLayout } from "@strapi/design-system";
 
 import { Illo } from "../../components/Illo";

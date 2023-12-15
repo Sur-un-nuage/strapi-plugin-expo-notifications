@@ -1,3 +1,5 @@
+import React from "react";
+
 import { SingleSelect, SingleSelectOption } from "@strapi/design-system";
 import { useIntl } from "react-intl";
 import getTrad from "../../utils/getTrad";

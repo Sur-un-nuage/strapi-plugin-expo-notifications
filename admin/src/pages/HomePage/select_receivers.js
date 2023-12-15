@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Stack, Select, Option } from "@strapi/design-system";
+import { Stack, SingleSelect, SingleSelectOption } from "@strapi/design-system";
 
 import { buildReceiversOptions } from "./functions";
 
@@ -8,7 +8,7 @@ export default function SelectReceivers({ receivers, tokens, setTokens }) {
   const options = buildReceiversOptions(receivers);
   return (
     <Stack spacing={11}>
-      <Select
+      <SingleSelect
         id="select1"
         onClear={() => setTokens([])}
         clearLabel="Déselectionner"
@@ -24,11 +24,11 @@ export default function SelectReceivers({ receivers, tokens, setTokens }) {
         // error={error}
       >
         {options.map((option) => (
-          <Option key={option.value} value={option.value}>
+          <SingleSelectOption key={option.value} value={option.value}>
             {option.label}
-          </Option>
+          </SingleSelectOption>
         ))}
-      </Select>
+      </SingleSelect>
     </Stack>
   );
 }

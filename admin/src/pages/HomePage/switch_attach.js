@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Typography, Box } from "@strapi/design-system";
 import { Attachment } from "@strapi/icons";
 import AttachAnEntry from "./attach_an_entry";

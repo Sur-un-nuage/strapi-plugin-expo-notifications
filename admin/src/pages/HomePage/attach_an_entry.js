@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useFetchClient } from "@strapi/helper-plugin";
 import { Grid, GridItem } from "@strapi/design-system";
