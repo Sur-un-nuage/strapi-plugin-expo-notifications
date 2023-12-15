@@ -1,6 +1,28 @@
 "use strict";
 
 module.exports = {
+  async lastEntries(ctx) {
+    const { contentTypeUid } = ctx.params;
+    const entries = await strapi.services[contentTypeUid].find({
+      _limit: 5,
+      _sort: "createdAt:desc",
+    });
+
+    ctx.send(entries);
+  },
+  getContentTypes(ctx) {
+    let contentTypes = [];
+    Object.values(strapi.contentTypes).map((contentType) => {
+      if (
+        (contentType.kind === "collectionType" ||
+          contentType.kind === "singleType") &&
+        !contentType.plugin
+      ) {
+        contentTypes.push(contentType);
+      }
+    });
+    return contentTypes;
+  },
   async getPluginConfig(ctx) {
     try {
       const testToken = await strapi

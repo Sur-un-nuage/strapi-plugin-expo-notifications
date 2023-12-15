@@ -1,6 +1,6 @@
 {
   "name": "@surunnuage/strapi-plugin-expo-notifications",
-  "version": "1.0.9",
+  "version": "1.10.0",
   "description": "Send expo notifications from Strapi",
   "repository": {
     "type": "git",

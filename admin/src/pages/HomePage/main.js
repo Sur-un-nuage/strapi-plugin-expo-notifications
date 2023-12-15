@@ -62,6 +62,8 @@ export default function Main({
     initialValues: {
       title: "",
       subtitle: "",
+      contentType: "",
+      entryId: "",
     },
     validationSchema: Yup.object({
       title: Yup.string().required(
@@ -72,6 +74,7 @@ export default function Main({
       ),
     }),
     onSubmit: async (values) => {
+      console.log("values from send test", values);
       if (testMode) {
         const testTokens = [testToken];
         values.title = `[Test] ${values.title}`;

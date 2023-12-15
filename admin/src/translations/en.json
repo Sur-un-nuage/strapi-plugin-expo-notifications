@@ -14,5 +14,11 @@
   "send.real": "Send",
   "form.required": "Required field",
   "empty.state": "You haven't sent any notification yet",
-  "loading": "Loading content..."
+  "loading": "Loading content...",
+  "attach.entry": "Attach an entry",
+  "detach.entry": "Remove attachment",
+  "make.title": "Make it the title",
+  "make.subtitle": "Make it the subtitle",
+  "Content type": "Content type",
+  "Entry": "Entry"
 }

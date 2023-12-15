@@ -2,11 +2,24 @@
 
 <img width="1322" alt="screen_notofications" src="https://user-images.githubusercontent.com/12623963/209171709-1121a482-f61e-475a-a291-3d96c15b1e7a.png">
 
+## Latest addition
+
+As of v1.10.0, you can now attach a Strapi entry as JSON data.
+The messages sent by the plugin will have the following structure:
+
+````{
+to: 'ExponentPushToken[XXX]',
+sound: 'default',
+title: 'Your title',
+body: 'Your subtitle',
+data: { contentType: 'api::modelName.modelName', entryId: 'the id of the entry' }
+}```
+
 ## Introduction
 
 Expo-notifications is a Strapi plugin that allows a Strapi user to send notifications via the Expo API directly from the Strapi admin panel. Typical use case: you have a react-native app connected to Strapi and you wish to notify your users about some newly published content without leaving the CMS.
 
-For the moment, the notification object is dead simple - a title and a subtitle. It might improve in the future.
+For the moment, the notification object is dead simple - a title, a subtitle and a Strapi entry as json data.
 
 ## How does it work ?
 
@@ -16,8 +29,10 @@ The plugin expects a list of expoPushTokens in order to know where to send the n
 
 In order to send a notification to the users of your react-native app, you first have to get their own unique expoPushToken. This can be achieved via the Notifications.getExpoPushTokenAsync() function at the root of your mobile app.
 
-```
+````
+
 const token = await Notifications.getExpoPushTokenAsync().data;
+
 ```
 
 The Expo docs will guide you through this step: https://docs.expo.dev/push-notifications/push-notifications-setup/.
@@ -39,18 +54,22 @@ Not the funniest part but you have to go through it: make sure you get the corre
 Run any of the following commands inside your strapi directory to install the plugin:
 
 ```
+
 npm i @surunnuage/strapi-plugin-expo-notifications
 
 yarn add @surunnuage/strapi-plugin-expo-notifications
+
 ```
 
 Then, to allow the plugin to appear in Strapi admin's panel:
 
 ```
+
 npm run build
 
 yarn build
-```
+
+````
 
 ## Usage
 
@@ -66,7 +85,7 @@ module.exports = ({ env }) => ({
   },
   ...
 });
-```
+````
 
 ### [Optional but recommended] Add your expo key
 
@@ -100,7 +119,6 @@ And that's it, now you can send notifications to your mobile app directly from S
 Must have:
 
 - Check push receipts for errors
-- Possibility to attach a Strapi entry as json data
 
 Nice to have:
 

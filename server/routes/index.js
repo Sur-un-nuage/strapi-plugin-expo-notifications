@@ -1,6 +1,24 @@
 module.exports = [
   {
     method: "GET",
+    path: "/get-entries/:contentTypeUid",
+    handler: "exponotification.lastEntries",
+    config: {
+      policies: ["admin::isAuthenticatedAdmin"],
+      // auth: false,
+    },
+  },
+  {
+    method: "GET",
+    path: "/get-content-types",
+    handler: "exponotification.getContentTypes",
+    config: {
+      policies: ["admin::isAuthenticatedAdmin"],
+      // auth: false,
+    },
+  },
+  {
+    method: "GET",
     path: "/get-plugin-config",
     handler: "exponotification.getPluginConfig",
     config: {

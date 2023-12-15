@@ -14,5 +14,11 @@
   "send.real": "Envoyer",
   "form.required": "Ce champ est requis",
   "empty.state": "Vous n'avez pas encore envoyé de notification...",
-  "loading": "Chargement du contenu..."
+  "loading": "Chargement du contenu...",
+  "attach.entry": "Joindre un article",
+  "detach.entry": "Ne pas joindre d'article",
+  "make.title": "Choisir comme titre",
+  "make.subtitle": "Choisir comme sous-titre",
+  "Content type": "Type de contenu",
+  "Entry": "Article"
 }

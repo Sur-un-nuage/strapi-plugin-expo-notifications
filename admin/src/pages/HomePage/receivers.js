@@ -19,7 +19,7 @@ export default function Receivers({
 }) {
   const { formatMessage } = useIntl();
   return (
-    <div style={{ height: 280 }}>
+    <div style={{ height: 450 }}>
       <Box padding={6}>
         <Box paddingBottom={2}>
           <Typography variant="beta">

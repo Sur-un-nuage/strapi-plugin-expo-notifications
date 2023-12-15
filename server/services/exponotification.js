@@ -9,6 +9,26 @@ const getStartFormQuery = (query) => {
   return (Number(page) - 1) * pageSize;
 };
 
+function buildMessage(pushToken, data) {
+  const { title, subtitle, contentType, entryId } = data;
+  const messageWithoutData = {
+    to: pushToken,
+    sound: "default",
+    title: title,
+    body: subtitle,
+  };
+  const messageWithData = {
+    ...messageWithoutData,
+    data: { contentType: data.contentType, entryId: data.entryId },
+  };
+  const messagetoSend =
+    contentType && contentType !== "" && entryId && entryId !== ""
+      ? messageWithData
+      : messageWithoutData;
+  console.log("Plugin will send the following message", messagetoSend);
+  return messagetoSend;
+}
+
 async function sendThem(expo, chunks) {
   let tickets = [];
   for (let chunk of chunks) {
@@ -95,13 +115,8 @@ module.exports = ({ strapi }) => ({
         console.error(`Push token ${pushToken} is not a valid Expo push token`);
         continue;
       }
-      messages.push({
-        to: pushToken,
-        sound: "default",
-        title: data.title,
-        body: data.subtitle,
-        // data: { withSome: "data" },
-      });
+      const messagetoSend = buildMessage(pushToken, data);
+      messages.push(messagetoSend);
     }
     let chunks = expo.chunkPushNotifications(messages);
     const tickets = sendThem(expo, chunks);
