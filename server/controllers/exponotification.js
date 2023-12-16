@@ -66,12 +66,16 @@ module.exports = {
       ctx.throw(500, err);
     }
   },
-  async create(ctx) {
+  async processNotification(ctx) {
+    console.log(
+      "received a create request with ctx.request.body",
+      ctx.request.body
+    );
     try {
       ctx.body = await strapi
         .plugin("expo-notifications")
         .service("exponotification")
-        .create(ctx.request.body);
+        .processNotification(ctx.request.body);
     } catch (err) {
       ctx.throw(500, err);
     }

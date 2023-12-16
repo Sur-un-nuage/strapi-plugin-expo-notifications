@@ -78,7 +78,7 @@ export default function Main({
       if (testMode) {
         const testTokens = [testToken];
         values.title = `[Test] ${values.title}`;
-        await post(`/expo-notifications/create`, {
+        await post(`/expo-notifications/process-notification`, {
           data: values,
           tokens: testTokens,
         }).then((res) => {
@@ -88,7 +88,7 @@ export default function Main({
         return;
       }
       if (tokens.length !== 0) {
-        await post(`/expo-notifications/create`, {
+        await post(`/expo-notifications/process-notification`, {
           data: values,
           tokens: tokens,
         }).then((res) => {

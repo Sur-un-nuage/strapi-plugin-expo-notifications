@@ -55,8 +55,8 @@ module.exports = [
   },
   {
     method: "POST",
-    path: "/create",
-    handler: "exponotification.create",
+    path: "/process-notification",
+    handler: "exponotification.processNotification",
     config: {
       policies: ["admin::isAuthenticatedAdmin"],
       // auth: false,

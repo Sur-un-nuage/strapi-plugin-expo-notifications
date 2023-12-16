@@ -34,7 +34,7 @@ async function sendThem(expo, chunks) {
   for (let chunk of chunks) {
     try {
       let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
-      console.log(ticketChunk);
+      console.log("ticketChunk", ticketChunk);
       tickets.push(...ticketChunk);
     } catch (error) {
       console.error(error);
@@ -106,7 +106,7 @@ module.exports = ({ strapi }) => ({
     }
     return { recipients, count };
   },
-  async create(body) {
+  async processNotification(body) {
     const { data, tokens } = body;
     let expo = new Expo({ accessToken: process.env.EXPO_ACCESS_TOKEN });
     let messages = [];
@@ -119,10 +119,18 @@ module.exports = ({ strapi }) => ({
       messages.push(messagetoSend);
     }
     let chunks = expo.chunkPushNotifications(messages);
-    const tickets = sendThem(expo, chunks);
+    const tickets = await sendThem(expo, chunks);
+    console.log("tickets from process notifs", tickets);
     const strapiData = await strapi.entityService.create(
       "plugin::expo-notifications.exponotification",
-      { data: data }
+      {
+        data: {
+          title: data.title,
+          subtitle: data.subtitle,
+          data: { contentType: data.contentType, entryId: data.entryId },
+          receivers: tickets,
+        },
+      }
     );
     return { tickets, strapiData };
   },
