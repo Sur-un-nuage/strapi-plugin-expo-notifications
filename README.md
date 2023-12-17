@@ -2,11 +2,11 @@
 
 <img width="1322" alt="screen_notofications" src="https://user-images.githubusercontent.com/12623963/209171709-1121a482-f61e-475a-a291-3d96c15b1e7a.png">
 
-## Latest addition
+## Latest additions
 
-As of v2.0.1, error reports are now fully relayed by the plugin. Each notification sent will get an array of errorsWhileSending and an array of errorsWhileReceiving in the receivers field (json). You will then be able to remove the dysfunctional expoPushTokens from the concerned users. Please don't forget to do it on a regular basis, as properly handling errors and removing non-functioning tokens is important for ensuring reliable delivery of notifications.
+As of v2.0.1, error reports are fully relayed by the plugin. Each notification sent will get an array of errorsWhileSending and, five minutes later, an array of errorsWhileReceiving in the receivers field (json). You will then be able to remove the dysfunctional expoPushTokens from the concerned users. Please don't forget to do it on a regular basis, as properly handling errors and removing non-functioning tokens is important for ensuring reliable delivery of notifications.
 
-As of v1.10.0, you now have the option to attach a Strapi entry as JSON data.
+As of v1.10.0, you have the option to attach a Strapi entry as JSON data.
 The messages sent by the plugin will have the following structure:
 
 ```
