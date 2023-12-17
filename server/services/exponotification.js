@@ -1,7 +1,52 @@
 "use strict";
 const { Expo } = require("expo-server-sdk");
 
-const getStartFormQuery = (query) => {
+async function fetchReceipts(strapi, strapiNotification, expo, tickets) {
+  let receiptIds = [];
+  for (let ticket of tickets) {
+    if (ticket.id) {
+      receiptIds.push(ticket.id);
+    }
+  }
+  let receiptIdChunks = expo.chunkPushNotificationReceiptIds(receiptIds);
+  for (let chunk of receiptIdChunks) {
+    try {
+      let receipts = await expo.getPushNotificationReceiptsAsync(chunk);
+      console.log("receipts", receipts);
+      for (let receiptId in receipts) {
+        let { status, message, details } = receipts[receiptId];
+        if (status === "ok") {
+          continue;
+        } else if (status === "error") {
+          console.error(
+            `There was an error sending a notification: ${message}`
+          );
+          if (details && details.error) {
+            console.error(`The error code is ${details.error}`);
+          }
+        }
+      }
+      const { id, receivers } = strapiNotification;
+      return await strapi.entityService.update(
+        "plugin::expo-notifications.exponotification",
+        id,
+        { data: { receivers: { ...receivers, receipts } } }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
+
+function scheduleReceiptFetch(strapi, strapiNotification, expo, tickets) {
+  const delay = 5 * 60 * 1000;
+  setTimeout(
+    () => fetchReceipts(strapi, strapiNotification, expo, tickets),
+    delay
+  );
+}
+
+const getStartFromQuery = (query) => {
   const { page, pageSize } = query;
   if (Number(page) <= 1) {
     return 0;
@@ -31,6 +76,7 @@ function buildMessage(pushToken, data) {
 
 async function sendThem(expo, chunks) {
   let tickets = [];
+  console.log("chunks", chunks);
   for (let chunk of chunks) {
     try {
       let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
@@ -51,7 +97,7 @@ module.exports = ({ strapi }) => ({
     );
   },
   async findFrom(query = { page: "1", pageSize: "10" }) {
-    const start = getStartFormQuery(query);
+    const start = getStartFromQuery(query);
     const count = await strapi.entityService.count(
       "plugin::expo-notifications.exponotification"
     );
@@ -78,7 +124,6 @@ module.exports = ({ strapi }) => ({
         "plugin::users-permissions.user",
         {
           start: start,
-          // limit: 200,
           filters: {
             [customFieldName]: {
               $notNull: true,
@@ -95,7 +140,6 @@ module.exports = ({ strapi }) => ({
         "plugin::users-permissions.user",
         {
           start: start,
-          // limit: 200,
           filters: {
             expoPushToken: {
               $notNull: true,
@@ -120,19 +164,35 @@ module.exports = ({ strapi }) => ({
     }
     let chunks = expo.chunkPushNotifications(messages);
     const tickets = await sendThem(expo, chunks);
-    console.log("tickets from process notifs", tickets);
-    const strapiData = await strapi.entityService.create(
+    let combinedArray = [];
+    for (let i = 0; i < chunks[0].length; i++) {
+      let chunk = chunks[0][i];
+      let ticket = tickets[i];
+      combinedArray.push({
+        to: chunk.to,
+        status: ticket.status,
+        id: ticket.id,
+      });
+    }
+    const strapiNotificationResult = await strapi.entityService.create(
       "plugin::expo-notifications.exponotification",
       {
         data: {
           title: data.title,
           subtitle: data.subtitle,
           data: { contentType: data.contentType, entryId: data.entryId },
-          receivers: tickets,
+          receivers: { tickets: combinedArray },
         },
       }
     );
-    return { tickets, strapiData };
+    console.log(
+      "strapiNotificationResult from process notifs",
+      strapiNotificationResult
+    );
+    if (strapiNotificationResult) {
+      scheduleReceiptFetch(strapi, strapiNotificationResult, expo, tickets);
+    }
+    return { tickets, strapiNotificationResult };
   },
   async update(id, data) {
     return await strapi.entityService.update(

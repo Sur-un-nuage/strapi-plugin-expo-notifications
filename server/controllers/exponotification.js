@@ -3,9 +3,14 @@
 module.exports = {
   async lastEntries(ctx) {
     const { contentTypeUid } = ctx.params;
-    const entries = await strapi.services[contentTypeUid].find({
-      _limit: 5,
-      _sort: "createdAt:desc",
+    // const entries = await strapi.services[contentTypeUid].find({
+    //   _limit: 5,
+    //   _sort: "createdAt:desc",
+    // });
+    const entries = await strapi.entityService.findPage(contentTypeUid, {
+      page: 1,
+      pageSize: 5,
+      // sort: { createdAt: "DESC" },
     });
 
     ctx.send(entries);
