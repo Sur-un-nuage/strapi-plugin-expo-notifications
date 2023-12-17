@@ -1,6 +1,6 @@
 async function fetchReceipts(strapi, strapiNotification, expo, tickets) {
   let receiptIds = [];
-  let receiptErrors = [];
+  let receiptsErrors = [];
   for (let ticket of tickets) {
     if (ticket.id) {
       receiptIds.push(ticket.id);
@@ -19,7 +19,7 @@ async function fetchReceipts(strapi, strapiNotification, expo, tickets) {
           console.error(
             `There was an error sending a notification: ${message}`
           );
-          receiptErrors.push({ status, message, details });
+          receiptsErrors.push({ status, message, details });
           if (details && details.error) {
             console.error(`The error code is ${details.error}`);
           }
@@ -31,7 +31,7 @@ async function fetchReceipts(strapi, strapiNotification, expo, tickets) {
         id,
         {
           data: {
-            receivers: { ...receivers, errorsWhileReceiving: receiptErrors },
+            receivers: { ...receivers, errorsWhileReceiving: receiptsErrors },
           },
         }
       );
