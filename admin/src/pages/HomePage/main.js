@@ -22,6 +22,7 @@ import Receivers from "./receivers";
 
 import pluginId from "../../pluginId";
 import getTrad from "../../utils/getTrad";
+import { getContentTypeName } from "./functions";
 
 const Pencil = () => (
   <Icon
@@ -74,6 +75,7 @@ export default function Main({
       ),
     }),
     onSubmit: async (values) => {
+      values.contentType = getContentTypeName(values.contentType);
       console.log("values from send test", values);
       if (testMode) {
         const testTokens = [testToken];
