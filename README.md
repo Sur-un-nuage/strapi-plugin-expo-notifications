@@ -16,7 +16,7 @@ to: 'ExponentPushToken[XXX]',
 sound: 'default',
 title: 'Your title',
 body: 'Your subtitle',
-data: { contentType: '[model_name]', entryId: [id_of_the_entry] } // Optional
+data: { contentType: [model_name], entryId: [id_of_the_entry] } // Optional
 }
 
 ```
