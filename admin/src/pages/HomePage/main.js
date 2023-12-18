@@ -75,8 +75,8 @@ export default function Main({
       ),
     }),
     onSubmit: async (values) => {
-      values.contentType = getContentTypeName(values.contentType);
       console.log("values from send test", values);
+      values.contentType = getContentTypeName(values.contentType);
       if (testMode) {
         const testTokens = [testToken];
         values.title = `[Test] ${values.title}`;
