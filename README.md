@@ -128,10 +128,6 @@ And that's it, now you can send notifications to your mobile app directly from S
 
 ## Further developments:
 
-Must have:
-
-- Check push receipts for errors
-
 Nice to have:
 
 - Customization options
