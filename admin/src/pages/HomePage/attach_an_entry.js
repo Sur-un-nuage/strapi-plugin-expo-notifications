@@ -42,12 +42,15 @@ export default function AttachAnEntry(props) {
   const { formik } = props;
   const [contentTypes, setContentTypes] = useState([]);
   const [entries, setEntries] = useState([]);
+  const [loading, setLoading] = useState(false);
   const { get } = useFetchClient();
   async function fetchTypes() {
+    setLoading(true);
     const res = await get(`/expo-notifications/get-content-types`);
     const typesOptions = buildOptionsFromContentTypes(res.data);
     setContentTypes(typesOptions);
     if (typesOptions.length > 0) {
+      formik.setFieldValue("contentType", typesOptions[0].value);
       fetchEntries(typesOptions[0].value);
     }
   }
@@ -55,6 +58,10 @@ export default function AttachAnEntry(props) {
     const res = await get(`/expo-notifications/get-entries/${value}`);
     const entriesOptions = buildOptionsFromEntries(res.data);
     setEntries(entriesOptions);
+    if (entriesOptions.length > 0) {
+      formik.setFieldValue("entryId", entriesOptions[0].value);
+    }
+    setLoading(false);
   }
   useEffect(() => {
     fetchTypes();
@@ -78,12 +85,9 @@ export default function AttachAnEntry(props) {
             type="Content type"
             options={contentTypes}
             manageSelected={manageContentTypeSelected}
-            value={
-              formik.values.contentType
-                ? formik.values.contentType
-                : contentTypes[0]?.value
-            }
+            value={formik.values.contentType}
             placeholder="Select a content type"
+            loading={loading}
           />
         </GridItem>
         <GridItem col={9}>
