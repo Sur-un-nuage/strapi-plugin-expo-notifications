@@ -22,8 +22,8 @@ function buildOptionsFromEntries(responseData) {
   let options = [];
   if (!responseData) {
     return options;
-  } else if (responseData.results && Array.isArray(responseData.results)) {
-    options = responseData.results.map((item) => {
+  } else if (Array.isArray(responseData)) {
+    options = responseData.map((item) => {
       return { value: item.id, label: item.title || "No title" };
     });
   } else if (typeof responseData === "object") {
