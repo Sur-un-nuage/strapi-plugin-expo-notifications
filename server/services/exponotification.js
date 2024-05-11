@@ -108,7 +108,7 @@ module.exports = ({ strapi }) => ({
           title: data.title,
           subtitle: data.subtitle,
           data: { contentType: data.contentType, entryId: data.entryId },
-          receivers: { errorsWhileSending: combinedArray },
+          receivers: { errorsWhileSending: combinedArray, tokens },
         },
       }
     );
